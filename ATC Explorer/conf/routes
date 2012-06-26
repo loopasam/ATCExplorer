@@ -1,23 +1,23 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
+# Set context name for Tomcat deployment
+%{ ctx = play.configuration.getProperty('war.context', '') }% 
+
+# Routes 
+# This file defines all application routes (Higher priority routes first) 
+# ~~~~ 
 
 # Home page
-GET     /                                       Application.index
+GET     ${ctx}                                      Application.index
 
 # Ignore favicon requests
-GET     /favicon.ico                            404
+GET     ${ctx}/favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
+GET     ${ctx}/public/                                staticDir:public
+
+# Map static resources from the /app/public folder to the /public path
+GET     ${ctx}/query                                Application.query
+GET     ${ctx}/download                                Application.download
+GET     ${ctx}/{id}                                Application.term
 
 # Catch all
-*       /{controller}/{action}                  {controller}.{action}
-
-# Map static resources from the /app/public folder to the /public path
-GET     /query                                Application.query
-GET     /download                                Application.download
-GET     /{id}                                Application.term
-
-
-
+*       ${ctx}/{controller}/{action}                  {controller}.{action}

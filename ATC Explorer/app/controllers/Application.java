@@ -7,8 +7,6 @@ import utils.OWLCLassToRender;
 
 import java.util.*;
 
-import org.semanticweb.owlapi.model.OWLAnnotationProperty;
-import org.semanticweb.owlapi.model.OWLClass;
 
 import models.*;
 
@@ -26,9 +24,7 @@ public class Application extends Controller {
     }
     
     public static void query(){
-	
 	render();
-	
     }
     
     public static void download(){

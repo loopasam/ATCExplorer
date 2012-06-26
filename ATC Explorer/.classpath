@@ -5,9 +5,9 @@
 	
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/home/samuel/workspace/lib/play-1.2.4/framework/play-1.2.4.jar" sourcepath="/home/samuel/workspace/lib/play-1.2.4/framework/src" />
-	<classpathentry kind="lib" path="/home/samuel/workspace/atcexplorer/lib/elk-0.2.jar"/>
-	<classpathentry kind="lib" path="/home/samuel/workspace/atcexplorer/lib/log4j-1.0.jar"/>
-	<classpathentry kind="lib" path="/home/samuel/workspace/atcexplorer/lib/owlapi-3.2.4.jar"/>
+	<classpathentry kind="lib" path="/home/samuel/git/ATCExplorer/ATC Explorer/lib/elk-0.2.jar"/>
+	<classpathentry kind="lib" path="/home/samuel/git/ATCExplorer/ATC Explorer/lib/log4j-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/samuel/git/ATCExplorer/ATC Explorer/lib/owlapi-3.2.4.jar"/>
 	<classpathentry kind="lib" path="/home/samuel/workspace/lib/play-1.2.4/framework/lib/netty-3.2.5.Final.jar"/>
 	<classpathentry kind="lib" path="/home/samuel/workspace/lib/play-1.2.4/framework/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/samuel/workspace/lib/play-1.2.4/framework/lib/postgresql-9.0.jar"/>

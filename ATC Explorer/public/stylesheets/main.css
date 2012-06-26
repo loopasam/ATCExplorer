@@ -48,15 +48,15 @@ a:hover {
 }
 
 .drug {
-	background-image: url(/public/images/drug.png);
+	background-image: url(../images/drug.png);
 }
 
 .dot {
-	background-image: url(/public/images/dot.png);
+	background-image: url(../images/dot.png);
 }
 
 .drug-bank{
-	background-image: url(/public/images/drugbank.png);
+	background-image: url(../images/drugbank.png);
 }
 
 .label {

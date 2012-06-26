@@ -1,0 +1,132 @@
+.current {
+	font-weight: bold;
+}
+
+.text {
+	font-size: 20px;
+	line-height: 20px;
+	font-family: Courier New;
+}
+
+.indication {
+	font-size: 23px;
+	line-height: 23px;
+	font-family: Courier New;
+	font-weight: bold;
+	color: #bcbcbd;
+	margin-bottom: 9px;
+}
+
+.sub {
+	margin-bottom: 9px;
+}
+
+.super {
+	margin-bottom: 9px;	
+}
+
+.icon-category{
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	vertical-align: middle;
+}
+
+.name {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+a {
+	color: black;
+}
+
+a:hover {
+	color: #bcbcbd;
+}
+
+.drug {
+	background-image: url(/public/images/drug.png);
+}
+
+.dot {
+	background-image: url(/public/images/dot.png);
+}
+
+.drug-bank{
+	background-image: url(/public/images/drugbank.png);
+}
+
+.label {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.seeAlso {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.box {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.current-container {
+	border: solid #bcbcbd 0px;
+	padding: 1%;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: #ffef80;
+}
+
+.menu-item {
+	display: block;
+	float: left;
+	margin-left: 20px;
+}
+
+.menu {
+	font-size: 20px;
+	line-height: 20px;
+	font-family: Courier New;
+	width: 100%;
+	background-color: #bcbcbd;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	height: 20px;
+	margin-bottom: 15px;
+}
+
+.menu a:hover {
+	color: #ffe533;
+}
+
+.logo {
+	border-bottom: 1px solid #ffe533;
+	padding: 10px;
+	background-color: #bcbcbd;
+	font-family: Courier New;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.super-container {
+	padding: 1%;
+	background-color: #fff5b2;
+}
+
+.sub-container {
+	padding: 1%;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: #ffe533;
+}

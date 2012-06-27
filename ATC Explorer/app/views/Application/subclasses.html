@@ -7,28 +7,13 @@
 	}
 }%
 #{set title: titleModif /}
+<h1>Subclasses of '${query}' (${subClasses.size})</h1>
 
-#{if superClasses}
-<div class="super-container box"><div class="indication">Direct SuperClass</div>
-#{/if}
-	
-	#{list superClasses, as:'superClass'}
-	<div class="super text">
-		<div class="${superClass.logo} icon-category"></div>
-		<div class="name">
-			<a href="${ctx}/${superClass.name}">${superClass.name}</a>
-		</div>
-		<div class="label">
-		${superClass.label}
-		</div>
-	</div>
-	#{/list}
-	
 	<div class="current-container box">
 		<div class="current text">
 			<div class="${currentClass.logo} icon-category"></div>
 			<div class="name">
-			${currentClass.name}
+			<a href="${ctx}/${currentClass.name}">${currentClass.name}</a>
 			</div>
 			#{if currentClass.label}
 			<div class="label">
@@ -42,7 +27,7 @@
 			#{/if}
 		</div>
 		#{if subClasses}
-		<div class="sub-container box"><div class="indication">Direct SubClass</div>
+		<div class="sub-container box"><div class="indication">Descendant SubClass</div>
 			#{list subClasses, as:'subClass'}
 			<div class="sub text">
 			<div class="${subClass.logo} icon-category"></div>
@@ -57,16 +42,12 @@
 		</div>
 		#{/if}
 	</div>
-#{if superClasses}
-</div>
-#{/if}
-
+	
 <script>
 $(function() {
    $(".current-container").animate({
     borderWidth: "10px",
     textSize: "20px",
   }, 500 );
-
 });
 </script>

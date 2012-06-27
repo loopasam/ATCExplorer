@@ -59,6 +59,7 @@ public class Brain {
     public static String base;
     public static ShortFormProvider shortFormProvider;
     public static BidirectionalShortFormProvider bidiShortFormProvider;
+    public static OWLEntityChecker entityChecker;
 
 
     public static void learn(String pathToFile, String base) throws OWLOntologyCreationException {
@@ -75,6 +76,7 @@ public class Brain {
 	shortFormProvider = new SimpleShortFormProvider();
 	Set<OWLOntology> importsClosure = ontology.getImportsClosure();
 	bidiShortFormProvider = new BidirectionalShortFormProviderAdapter(manager, importsClosure, shortFormProvider);
+	entityChecker = new ShortFormEntityChecker(bidiShortFormProvider);
     }
 
     public static String getLabel(String id) {
@@ -107,9 +109,9 @@ public class Brain {
 	return labelValue;
     }
 
-    public static List<OWLCLassToRender> getSubClassesToRender(String id) {
+    public static List<OWLCLassToRender> getSubClassesToRender(String id, boolean directOnly) throws ParserException {
 	OWLClassExpression classExpression = parseClassExpression(id);
-	Set<OWLClass> subClasses = reasoner.getSubClasses(classExpression, true).getFlattened();
+	Set<OWLClass> subClasses = reasoner.getSubClasses(classExpression, directOnly).getFlattened();
 	List<OWLCLassToRender> subClassesToRender = new ArrayList<OWLCLassToRender>();
 	for (OWLEntity subclass : subClasses) {
 	    OWLCLassToRender classToRender = new OWLCLassToRender();
@@ -151,17 +153,12 @@ public class Brain {
 	return false;
     }
 
-    private static OWLClassExpression parseClassExpression(String expression) {
+    public static OWLClassExpression parseClassExpression(String expression) throws ParserException {
 	ManchesterOWLSyntaxEditorParser parser = new ManchesterOWLSyntaxEditorParser(factory, expression);
 	parser.setDefaultOntology(ontology);
-	OWLEntityChecker entityChecker = new ShortFormEntityChecker(bidiShortFormProvider);
 	parser.setOWLEntityChecker(entityChecker);
 	OWLClassExpression owlExpression = null;
-	try {
-	    owlExpression = parser.parseClassExpression();
-	} catch (ParserException e) {
-	    e.printStackTrace();
-	}
+	owlExpression = parser.parseClassExpression();
 	return owlExpression;
     }
 
@@ -174,9 +171,10 @@ public class Brain {
 	return classToRender;
     }
 
-    public static List<OWLCLassToRender> getSuperClassesToRender(String id) {
-	OWLClassExpression classExpression = parseClassExpression(id);
-	Set<OWLClass> superClasses = reasoner.getSuperClasses(classExpression, true).getFlattened();
+    public static List<OWLCLassToRender> getSuperClassesToRender(String id, boolean onlyDirect) throws ParserException {
+	OWLClassExpression classExpression = null;
+	classExpression = parseClassExpression(id);
+	Set<OWLClass> superClasses = reasoner.getSuperClasses(classExpression, onlyDirect).getFlattened();
 	List<OWLCLassToRender> superClassesToRender = new ArrayList<OWLCLassToRender>();
 	for (OWLEntity superclass : superClasses) {
 	    OWLCLassToRender classToRender = new OWLCLassToRender();
@@ -188,5 +186,17 @@ public class Brain {
 	    }
 	}
 	return sort(superClassesToRender);
+    }
+
+
+    public static boolean knowsClass(String classNameToTest) {
+	ManchesterOWLSyntaxEditorParser parser = new ManchesterOWLSyntaxEditorParser(factory, classNameToTest);
+	parser.setDefaultOntology(ontology);
+	parser.setOWLEntityChecker(entityChecker);
+	if(parser.isClassName(classNameToTest)){
+	    return true;
+	}else{
+	    return false;
+	}
     }
 }

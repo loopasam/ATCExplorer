@@ -1,13 +1,16 @@
 #{extends 'main.html' /}
 
 <h2>OWL Query</h2>
-<h1>query: ${query}</h1>
 #{form @Application.calculateResults()}
 <p>
 <label for="query">Enter an OWL query using Manchester syntax:</label>
-<input type="text" name="query" />
+<input type="text" name="query" value="${flash.query}"/>
 </p>
-<input type="radio" name="resultsType" value="subclasses">Subclasses<br>
-<input type="radio" name="resultsType" value="superclasses" checked>Superclasses<br>
+<input type="radio" name="resultsType" value="subclasses" checked>Subclasses<br>
+<input type="radio" name="resultsType" value="superclasses">Superclasses<br>
 <input type="submit" value="Submit your query" />
 #{/form}
+
+#{if flash.parsingError}
+<p>${flash.parsingError}</p>
+#{/if}

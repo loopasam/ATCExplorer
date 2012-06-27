@@ -1,1 +1,13 @@
 #{extends 'main.html' /}
+
+<h2>OWL Query</h2>
+<h1>query: ${query}</h1>
+#{form @Application.calculateResults()}
+<p>
+<label for="query">Enter an OWL query using Manchester syntax:</label>
+<input type="text" name="query" />
+</p>
+<input type="radio" name="resultsType" value="subclasses">Subclasses<br>
+<input type="radio" name="resultsType" value="superclasses" checked>Superclasses<br>
+<input type="submit" value="Submit your query" />
+#{/form}

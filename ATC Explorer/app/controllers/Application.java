@@ -22,11 +22,27 @@ public class Application extends Controller {
 	List<OWLCLassToRender> superClasses = Brain.getSuperClassesToRender(id);
 	render(currentClass, subClasses, superClasses);
     }
-    
+
     public static void query(){
 	render();
     }
-    
+
+    public static void subclasses(String query){
+	render(query);
+    }
+
+    public static void superclasses(String query){
+	render(query);
+    }
+
+    public static void calculateResults(String query, String resultsType){
+	if(resultsType.equals("subclasses")){
+	    subclasses(query);
+	}else{
+	    superclasses(query);
+	}
+    }
+
     public static void download(){
 	render();
     }

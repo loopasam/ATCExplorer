@@ -15,7 +15,10 @@ GET     ${ctx}/favicon.ico                            404
 GET     ${ctx}/public/                                staticDir:public
 
 # Map static resources from the /app/public folder to the /public path
-GET     ${ctx}/query                                Application.query
+GET     ${ctx}/query                                          Application.query 
+GET     ${ctx}/subclasses/{query}                   Application.subclasses
+ GET     ${ctx}/superclasses/{query}                   Application.superclasses
+
 GET     ${ctx}/download                                Application.download
 GET     ${ctx}/{id}                                Application.term
 

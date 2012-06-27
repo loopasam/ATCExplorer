@@ -67,6 +67,7 @@ public class Application extends Controller {
 	}
 	    //TODO throw an error sur method comme sub and super class
 	    //TODO important the getClass methodsa should throw the exception
+	//la classe artefact doit etre generee ici dans la methode getClass a partir dfe la query car elle a ete checkee
 	    OWLCLassToRender currentClass = Brain.getClassToRender(query);
 	    
 	    List<OWLCLassToRender> subClasses = null;

@@ -55,6 +55,10 @@ a:hover {
 	background-image: url(../images/dot.png);
 }
 
+.anon {
+	background-image: url(../images/anon.png);
+}
+
 .drug-bank{
 	background-image: url(../images/drugbank.png);
 }

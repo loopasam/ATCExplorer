@@ -208,7 +208,7 @@ public class Brain {
 	}else{
 	    classToRender.label = expression;
 	    classToRender.name = "Anonymous Class";
-	    classToRender.logo = "dot";
+	    classToRender.logo = "anon";
 	}
 
 	return classToRender;

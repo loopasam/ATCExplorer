@@ -23,26 +23,30 @@ public class Application extends Controller {
     }
 
     public static void term(String id){
-	if(Brain.knowsClass(id)){
-	    OWLCLassToRender currentClass = Brain.getClassToRender(id);
+	if(Brain.knowsNamedClass(id)){
+	    OWLCLassToRender currentClass = null;
+	    try {
+		currentClass = Brain.getClassToRender(id);
+	    } catch (ParserException currentClassException) {
+		error(404, "named class does not exist");
+	    }
 	    List<OWLCLassToRender> subClasses = null;
 	    try {
 		subClasses = Brain.getSubClassesToRender(id, true);
 	    } catch (ParserException e) {
-		//TODO 404
+		error(404, "named class does not exist");
 		e.printStackTrace();
 	    }
 	    List<OWLCLassToRender> superClasses = null;
 	    try {
 		superClasses = Brain.getSuperClassesToRender(id, true);
 	    } catch (ParserException e) {
-		// TODO Auto-generated catch block - 404
+		error(404, "named class does not exist");
 		e.printStackTrace();
 	    }
 	    render(currentClass, subClasses, superClasses);
 	}else{
-	    //TODO hadling error - 404
-	    System.out.println("Not a class: " + id);
+	    error(404, "named class does not exist");
 	}
     }
 
@@ -50,73 +54,53 @@ public class Application extends Controller {
 	render();
     }
 
-    public static void subclasses(String query){
-
+    public static void subclasses(String expression){
+	OWLCLassToRender currentClass = null;
 	try {
-	    Brain.parseClassExpression(query);
+	    currentClass = Brain.getClassToRender(expression);
 	} catch (ParserException e1) {
-	    // TODO Auto-generated catch block - 404 wrong expression
-	    e1.printStackTrace();
+	    error(404, "class expression does not exist");
 	}
-	
-	if(!Brain.knowsClass(query)){
-	    //TODO: named query
-	}else{
-	    //TODO: clomplex query
-	    //Artifact named class to remove after
-	}
-	    //TODO throw an error sur method comme sub and super class
-	    //TODO important the getClass methodsa should throw the exception
-	//la classe artefact doit etre generee ici dans la methode getClass a partir dfe la query car elle a ete checkee
-	    OWLCLassToRender currentClass = Brain.getClassToRender(query);
-	    
-	    List<OWLCLassToRender> subClasses = null;
-	    try {
-		subClasses = Brain.getSubClassesToRender(query, false);
-	    } catch (ParserException e) {
-		//TODO 404
-		e.printStackTrace();
-	    }
-	    render(query, currentClass, subClasses);
-	
-
-
-    }
-
-    public static void superclasses(String query){
-	//Check if it is a named class
-	if(Brain.knowsClass(query)){
-	    OWLCLassToRender currentClass = Brain.getClassToRender(query);
-	    List<OWLCLassToRender> superClasses = null;
-	    try {
-		superClasses = Brain.getSuperClassesToRender(query, false);
-	    } catch (ParserException e) {
-		//TODO 404
-		e.printStackTrace();
-	    }
-	    render(query, currentClass, superClasses);
-	}else{
-	    //TODO create a temporary named class
-	    System.out.println("Complex query: " + query);
-	}
-
-    }
-
-    public static void calculateResults(String query, String resultsType){
+	List<OWLCLassToRender> subClasses = null;
 	try {
-	    Brain.parseClassExpression(query);
+	    subClasses = Brain.getSubClassesToRender(expression, false);
+	} catch (ParserException e) {
+	    error(404, "class expression does not exist");
+	}
+	render(expression, currentClass, subClasses);
+    }
+
+    public static void superclasses(String expression){
+	OWLCLassToRender currentClass = null;
+	try {
+	    currentClass = Brain.getClassToRender(expression);
+	} catch (ParserException e1) {
+	    error(404, "class expression does not exist");
+	}
+	List<OWLCLassToRender> superClasses = null;
+	try {
+	    superClasses = Brain.getSuperClassesToRender(expression, false);
+	} catch (ParserException e) {
+	    error(404, "class expression does not exist");
+	}
+	render(expression, currentClass, superClasses);
+    }
+
+    public static void calculateResults(String expression, String resultsType){
+	try {
+	    Brain.parseClassExpression(expression);
 	} catch (ParserException e) {
 	    //If error, the query form is re-shown to the user
 	    String trace = e.getLocalizedMessage();
 	    flash.put("parsingError", trace);
-	    flash.put("query", query);
+	    flash.put("expression", expression);
 	    query();
 	}
 
 	if(resultsType.equals("subclasses")){
-	    subclasses(query);
+	    subclasses(expression);
 	}else{
-	    superclasses(query);
+	    superclasses(expression);
 	}
     }
 

@@ -18,6 +18,7 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.expression.OWLEntityChecker;
 import org.semanticweb.owlapi.expression.ParserException;
 import org.semanticweb.owlapi.expression.ShortFormEntityChecker;
+import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -25,11 +26,13 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyFactory;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
@@ -39,6 +42,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.util.BidirectionalShortFormProvider;
 import org.semanticweb.owlapi.util.BidirectionalShortFormProviderAdapter;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
+import org.semanticweb.owlapi.util.OWLEntityRemover;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleShortFormProvider;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
@@ -109,21 +113,51 @@ public class Brain {
 	return labelValue;
     }
 
-    public static List<OWLCLassToRender> getSubClassesToRender(String id, boolean directOnly) throws ParserException {
-	OWLClassExpression classExpression = parseClassExpression(id);
-	Set<OWLClass> subClasses = reasoner.getSubClasses(classExpression, directOnly).getFlattened();
+    public static List<OWLCLassToRender> getSubClassesToRender(String expression, boolean directOnly) throws ParserException {
+
+	OWLClassExpression classExpression = parseClassExpression(expression);
+	Set<OWLClass> subClasses = null;
+
+	if(!knowsNamedClass(expression)){
+	    OWLClass anonymousClass = getTemporaryAnonymousClass(classExpression);
+	    subClasses = reasoner.getSubClasses(anonymousClass, directOnly).getFlattened();
+	    removeTemporaryAnonymousClass(anonymousClass);
+	}else{
+	    subClasses = reasoner.getSubClasses(classExpression, directOnly).getFlattened();
+	}
+
 	List<OWLCLassToRender> subClassesToRender = new ArrayList<OWLCLassToRender>();
 	for (OWLEntity subclass : subClasses) {
 	    OWLCLassToRender classToRender = new OWLCLassToRender();
 	    if(!isTopEntity(subclass)){
 		classToRender.logo = getLogo(shortFormProvider.getShortForm(subclass));
 		classToRender.name = shortFormProvider.getShortForm(subclass);
+		System.out.println("class to render: " + classToRender.name);
 		classToRender.label = getLabel(classToRender.name);
 		subClassesToRender.add(classToRender);
 	    }
 	}
 
 	return sort(subClassesToRender);
+    }
+
+    private static void removeTemporaryAnonymousClass(OWLClass anonymousClass) {	
+	OWLEntityRemover remover = new OWLEntityRemover(manager, Collections.singleton(ontology));
+	anonymousClass.accept(remover);
+	manager.applyChanges(remover.getChanges());
+	remover.reset();
+	reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+    }
+
+    public static OWLClass getTemporaryAnonymousClass(OWLClassExpression classExpression) {
+	//TODO meilleur value
+	IRI anonymousIri = IRI.create("temp");
+	OWLClass anonymousClass = factory.getOWLClass(anonymousIri);
+	OWLEquivalentClassesAxiom equivalenceAxiom = factory.getOWLEquivalentClassesAxiom(classExpression, anonymousClass);
+	AddAxiom addAx = new AddAxiom(ontology, equivalenceAxiom);
+	manager.applyChange(addAx);
+	reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+	return anonymousClass;
     }
 
     private static List<OWLCLassToRender> sort(List<OWLCLassToRender> classes) {
@@ -162,19 +196,37 @@ public class Brain {
 	return owlExpression;
     }
 
-    public static OWLCLassToRender getClassToRender(String id) {
+    public static OWLCLassToRender getClassToRender(String expression) throws ParserException {
+
 	OWLCLassToRender classToRender = new OWLCLassToRender();
-	classToRender.label = getLabel(id);
-	classToRender.name = id;
-	classToRender.seeAlso = getSeeAlso(id);
-	classToRender.logo = getLogo(id);
+
+	if(knowsNamedClass(expression)){
+	    classToRender.label = getLabel(expression);
+	    classToRender.name = expression;
+	    classToRender.seeAlso = getSeeAlso(expression);
+	    classToRender.logo = getLogo(expression);
+	}else{
+	    classToRender.label = expression;
+	    classToRender.name = "Anonymous Class";
+	    classToRender.logo = "dot";
+	}
+
 	return classToRender;
     }
 
-    public static List<OWLCLassToRender> getSuperClassesToRender(String id, boolean onlyDirect) throws ParserException {
-	OWLClassExpression classExpression = null;
-	classExpression = parseClassExpression(id);
-	Set<OWLClass> superClasses = reasoner.getSuperClasses(classExpression, onlyDirect).getFlattened();
+    public static List<OWLCLassToRender> getSuperClassesToRender(String expression, boolean onlyDirect) throws ParserException {
+
+	OWLClassExpression classExpression = parseClassExpression(expression);
+	Set<OWLClass> superClasses = null;
+
+	if(!knowsNamedClass(expression)){
+	    OWLClass anonymousClass = getTemporaryAnonymousClass(classExpression);
+	    superClasses = reasoner.getSuperClasses(anonymousClass, onlyDirect).getFlattened();
+	    removeTemporaryAnonymousClass(anonymousClass);
+	}else{
+	    superClasses = reasoner.getSuperClasses(classExpression, onlyDirect).getFlattened();
+	}
+
 	List<OWLCLassToRender> superClassesToRender = new ArrayList<OWLCLassToRender>();
 	for (OWLEntity superclass : superClasses) {
 	    OWLCLassToRender classToRender = new OWLCLassToRender();
@@ -188,8 +240,7 @@ public class Brain {
 	return sort(superClassesToRender);
     }
 
-
-    public static boolean knowsClass(String classNameToTest) {
+    public static boolean knowsNamedClass(String classNameToTest) {
 	ManchesterOWLSyntaxEditorParser parser = new ManchesterOWLSyntaxEditorParser(factory, classNameToTest);
 	parser.setDefaultOntology(ontology);
 	parser.setOWLEntityChecker(entityChecker);

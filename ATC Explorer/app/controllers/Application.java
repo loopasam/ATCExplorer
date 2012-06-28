@@ -28,25 +28,25 @@ public class Application extends Controller {
 	    try {
 		currentClass = Brain.getClassToRender(id);
 	    } catch (ParserException currentClassException) {
-		error(404, "named class does not exist");
+		error(404, "Named class '" + id + "' does not exist");
 	    }
 	    List<OWLCLassToRender> subClasses = null;
 	    try {
 		subClasses = Brain.getSubClassesToRender(id, true);
 	    } catch (ParserException e) {
-		error(404, "named class does not exist");
+		error(404, "Named class '" + id + "' does not exist");
 		e.printStackTrace();
 	    }
 	    List<OWLCLassToRender> superClasses = null;
 	    try {
 		superClasses = Brain.getSuperClassesToRender(id, true);
 	    } catch (ParserException e) {
-		error(404, "named class does not exist");
+		error(404, "Named class '" + id + "' does not exist");
 		e.printStackTrace();
 	    }
 	    render(currentClass, subClasses, superClasses);
 	}else{
-	    error(404, "named class does not exist");
+	    error(404, "Named class '" + id + "' does not exist");
 	}
     }
 
@@ -59,13 +59,13 @@ public class Application extends Controller {
 	try {
 	    currentClass = Brain.getClassToRender(expression);
 	} catch (ParserException e1) {
-	    error(404, "class expression does not exist");
+	    error(404, "'" + expression + "' is not a valid OWL class expression");
 	}
 	List<OWLCLassToRender> subClasses = null;
 	try {
 	    subClasses = Brain.getSubClassesToRender(expression, false);
 	} catch (ParserException e) {
-	    error(404, "class expression does not exist");
+	    error(404, "'" + expression + "' is not a valid OWL class expression");
 	}
 	render(expression, currentClass, subClasses);
     }
@@ -75,13 +75,13 @@ public class Application extends Controller {
 	try {
 	    currentClass = Brain.getClassToRender(expression);
 	} catch (ParserException e1) {
-	    error(404, "class expression does not exist");
+	    error(404, "'" + expression + "' is not a valid OWL class expression");
 	}
 	List<OWLCLassToRender> superClasses = null;
 	try {
 	    superClasses = Brain.getSuperClassesToRender(expression, false);
 	} catch (ParserException e) {
-	    error(404, "class expression does not exist");
+	    error(404, "'" + expression + "' is not a valid OWL class expression");
 	}
 	render(expression, currentClass, superClasses);
     }

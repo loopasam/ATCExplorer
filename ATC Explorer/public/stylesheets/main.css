@@ -12,7 +12,7 @@
 	margin-left: auto;
 	margin-right: auto;
 	width: 50%;
-	text-align: center;	
+	text-align: center;
 }
 
 .query-error {
@@ -22,10 +22,10 @@
 }
 
 .examples-query {
-	color: #bcbcbd;
-	font-style: italic;
+	color: #bcbcbd; font-style : italic;
 	margin-bottom: 0.5em;
 	margin-top: 0.5em;
+	font-style: italic;
 }
 
 .example-query {
@@ -38,6 +38,16 @@
 	padding-right: 3%;
 	padding-left: 3%;
 	padding-top: 1%;
+}
+
+.img404 {
+	background-image: url(../images/face-404.png);
+	height: 200px;
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	background-repeat: no-repeat;
+	background-size: 100%;
 }
 
 .top-logo {

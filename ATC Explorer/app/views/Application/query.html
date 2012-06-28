@@ -1,16 +1,26 @@
 #{extends 'main.html' /}
-
-<h2>OWL Query</h2>
+#{set title: 'OWL Query' /}
+<div class="centered">
+<div class="text label-query">OWL Query:</div>
 #{form @Application.calculateResults()}
-<p>
-<label for="query">Enter an OWL query using Manchester syntax:</label>
-<input type="text" name="expression" value="${flash.expression}"/>
-</p>
-<input type="radio" name="resultsType" value="subclasses" checked>Subclasses<br>
-<input type="radio" name="resultsType" value="superclasses">Superclasses<br>
-<input type="submit" value="Submit your query" />
-#{/form}
-
+<label for="query" class="text centered">Enter an OWL expression using <a target="_BLANK" href="http://www.w3.org/TR/owl2-manchester-syntax/">Manchester syntax</a></label>
+<div class="examples-query text">
+Examples: <div class="example-query">A and B</div>, <div class="example-query">DB00550</div>
+</div>
+<input type="text" class="input-query centered" name="expression" value="${flash.expression}"/>
 #{if flash.parsingError}
-<p>${flash.parsingError}</p>
+<div class="query-error text">${flash.parsingError}</div>
 #{/if}
+<input type="radio" name="resultsType" value="subclasses" checked><div class="text text-radio">SubClasses</div>
+<input type="radio" name="resultsType" value="superclasses"><div class="text text-radio">Super Classes</div>
+<input type="submit" class="submit-query text centered" value="Submit your query" />
+#{/form}
+</div>
+
+<script>
+$(function() {
+   $('.example-query').click(function() {
+	$('.input-query').val($(this).text());
+   });
+});
+</script>

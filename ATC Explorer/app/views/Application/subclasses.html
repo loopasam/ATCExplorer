@@ -7,13 +7,18 @@
 	}
 }%
 #{set title: titleModif /}
-<h1>Descendant Classes of '${expression}' (${subClasses.size}):</h1>
+<div class="text label-query">Query: Descendant Classes of '<i>${expression}</i>' (${subClasses.size})</div>
 
 	<div class="current-container box">
 		<div class="current text">
 			<div class="${currentClass.logo} icon-category"></div>
 			<div class="name">
+			#{if currentClass.name.equals("Anonymous Class")}
+			${currentClass.name}
+			#{/if}
+			#{else}
 			<a href="${ctx}/${currentClass.name}">${currentClass.name}</a>
+			#{/else}
 			</div>
 			#{if currentClass.label}
 			<div class="label">

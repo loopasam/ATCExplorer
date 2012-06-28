@@ -132,7 +132,6 @@ public class Brain {
 	    if(!isTopEntity(subclass)){
 		classToRender.logo = getLogo(shortFormProvider.getShortForm(subclass));
 		classToRender.name = shortFormProvider.getShortForm(subclass);
-		System.out.println("class to render: " + classToRender.name);
 		classToRender.label = getLabel(classToRender.name);
 		subClassesToRender.add(classToRender);
 	    }

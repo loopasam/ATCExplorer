@@ -7,9 +7,9 @@
 	}
 }%
 #{set title: titleModif /}
-<h1>Super Classes of '${expression}' (${superClasses.size}):</h1>
+<div class="text label-query">Query: Super Classes of '<i>${expression}</i>' (${superClasses.size})</div>
 
-<div class="super-container box"><div class="indication">SuperClass</div>
+<div class="super-container box"><div class="indication">Super Classes</div>
 	#{list superClasses, as:'superClass'}
 	<div class="super text">
 		<div class="${superClass.logo} icon-category"></div>
@@ -26,7 +26,12 @@
 		<div class="current text">
 			<div class="${currentClass.logo} icon-category"></div>
 			<div class="name">
+			#{if currentClass.name.equals("Anonymous Class")}
+			${currentClass.name}
+			#{/if}
+			#{else}
 			<a href="${ctx}/${currentClass.name}">${currentClass.name}</a>
+			#{/else}
 			</div>
 			#{if currentClass.label}
 			<div class="label">

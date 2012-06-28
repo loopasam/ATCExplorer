@@ -3,31 +3,97 @@
 }
 
 .text {
-	font-size: 20px;
-	line-height: 20px;
+	font-size: 1.1em;
+	line-height: 1.1em;
 	font-family: Courier New;
+}
+
+.centered {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	text-align: center;	
+}
+
+.query-error {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	color: red;
+}
+
+.examples-query {
+	color: #bcbcbd;
+	font-style: italic;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+}
+
+.example-query {
+	text-decoration: underline;
+	display: inline-block;
+}
+
+.introduction {
+	line-height: 1.5em;
+	padding-right: 3%;
+	padding-left: 3%;
+	padding-top: 1%;
+}
+
+.top-logo {
+	margin-right: 1em;
+}
+
+.example-query:hover {
+	color: #ffe533;
+	cursor: pointer;
+}
+
+.input-query {
+	display: block;
+	margin-top: 0.8em;
+	margin-bottom: 0.8em;
+	font-size: 1.1em;
+	padding: 0.3em;
+	border: solid #bcbcbd 4px;
+}
+
+.submit-query {
+	display: block;
+	margin-top: 0.8em;
+	margin-bottom: 0.8em;
+	padding: 0.3em;
+}
+
+.text-radio {
+	display: inline-block;
+}
+
+.label-query {
+	font-weight: bold;
+	margin-bottom: 0.6em;
 }
 
 .indication {
-	font-size: 23px;
-	line-height: 23px;
+	font-size: 1.1em;
+	line-height: 1.1em;
 	font-family: Courier New;
 	font-weight: bold;
 	color: #bcbcbd;
-	margin-bottom: 9px;
+	margin-bottom: 0.5em;
 }
 
 .sub {
-	margin-bottom: 9px;
+	margin-bottom: 0.5em;
 }
 
 .super {
-	margin-bottom: 9px;	
+	margin-bottom: 0.5em;
 }
 
-.icon-category{
-	width: 20px;
-	height: 20px;
+.icon-category {
+	width: 1.1em;
+	height: 1.1em;
 	display: inline-block;
 	background-repeat: no-repeat;
 	background-size: 100%;
@@ -40,7 +106,7 @@
 }
 
 a {
-	color: black;
+	color: #000;
 }
 
 a:hover {
@@ -59,7 +125,7 @@ a:hover {
 	background-image: url(../images/anon.png);
 }
 
-.drug-bank{
+.drug-bank {
 	background-image: url(../images/drugbank.png);
 }
 
@@ -74,9 +140,9 @@ a:hover {
 }
 
 .box {
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	border-radius: 1em;
 }
 
 .current-container {
@@ -91,19 +157,19 @@ a:hover {
 .menu-item {
 	display: block;
 	float: left;
-	margin-left: 20px;
+	margin-left: 1.3em;
 }
 
 .menu {
-	font-size: 20px;
-	line-height: 20px;
+	font-size: 1.2em;
+	line-height: 1.2em;
 	font-family: Courier New;
 	width: 100%;
 	background-color: #bcbcbd;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	height: 20px;
-	margin-bottom: 15px;
+	padding-top: 0.6em;
+	padding-bottom: 0.6em;
+	height: 1.2em;
+	margin-bottom: 1.4em;
 }
 
 .menu a:hover {
@@ -111,11 +177,11 @@ a:hover {
 }
 
 .logo {
-	border-bottom: 1px solid #ffe533;
-	padding: 10px;
+	border-bottom: 2px solid #ffe533;
+	padding: 0.6em;
 	background-color: #bcbcbd;
 	font-family: Courier New;
-	font-size: 20px;
+	font-size: 1.2em;
 	font-weight: bold;
 }
 

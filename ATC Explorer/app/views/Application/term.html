@@ -9,7 +9,7 @@
 #{set title: titleModif /}
 
 #{if superClasses}
-<div class="super-container box"><div class="indication">Direct SuperClass</div>
+<div class="super-container box"><div class="indication">Direct Super Classes</div>
 #{/if}
 	
 	#{list superClasses, as:'superClass'}
@@ -42,7 +42,7 @@
 			#{/if}
 		</div>
 		#{if subClasses}
-		<div class="sub-container box"><div class="indication">Direct SubClass</div>
+		<div class="sub-container box"><div class="indication">Direct SubClasses</div>
 			#{list subClasses, as:'subClass'}
 			<div class="sub text">
 			<div class="${subClass.logo} icon-category"></div>

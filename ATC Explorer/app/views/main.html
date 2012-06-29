@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-%{
-	ctx = play.configuration.getProperty('war.context', '');
-}%
 <html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta charset="${_response_encoding}">
-        <link rel="stylesheet" media="screen" href="${ctx}/public/stylesheets/main.css">
-        <link rel="shortcut icon" type="image/png" href="${ctx}/public/images/favicon.png">
-        <script src="${ctx}/public/javascripts/jquery-1.6.4.min.js" type="text/javascript" charset="${_response_encoding}"></script>
-    </head>
-    <body>
-    
-    	<div class="logo"><div class="drug icon-category top-logo"></div>OWL Version of the Anatomical Therapeutic Chemical Classification System</div>
-    	<div class="menu">
-    		<div class="menu-item"><a href="@{Application.index()}">Home</a></div>
-    		<div class="menu-item"><a href="@{Application.term('Thing')}">Browse</a></div>
-    		<div class="menu-item"><a href="@{Application.query()}">Query</a></div>
-    		<div class="menu-item"><a href="@{Application.download()}">Download</a></div>
-    	</div>
-        #{doLayout /}
-    </body>
+<head>
+<title>#{get 'title' /}</title>
+<meta charset="${_response_encoding}">
+<link rel="stylesheet" media="screen"
+	href="@{'/public/stylesheets/main.css'}">
+<link rel="shortcut icon" type="image/png"
+	href="@{'/public/images/favicon.png'}">
+<script src="@{'/public/javascripts/jquery-1.6.4.min.js'}"
+	type="text/javascript" charset="${_response_encoding}"></script>
+</head>
+<body>
+
+	<div class="logo">
+		<div class="drug icon-category top-logo"></div>
+		OWL Version of the Anatomical Therapeutic Chemical Classification
+		System
+	</div>
+	<div class="menu">
+		<div class="menu-item">
+			<a href="@{Application.index()}">Home</a>
+		</div>
+		<div class="menu-item">
+			<a href="@{Application.term('Thing')}">Browse</a>
+		</div>
+		<div class="menu-item">
+			<a href="@{Application.query()}">Query</a>
+		</div>
+		<div class="menu-item">
+			<a href="@{Application.download()}">Download</a>
+		</div>
+	</div>
+	#{doLayout /}
+</body>
 </html>

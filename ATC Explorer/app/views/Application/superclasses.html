@@ -1,6 +1,5 @@
 #{extends 'main.html' /}
 %{
-	ctx = play.configuration.getProperty('war.context', '');
 	titleModif = currentClass.name+' - '+currentClass.label;
 	if(currentClass.label == null){
 		titleModif = currentClass.name;
@@ -14,7 +13,7 @@
 	<div class="super text">
 		<div class="${superClass.logo} icon-category"></div>
 		<div class="name">
-			<a href="${ctx}/${superClass.name}">${superClass.name}</a>
+			<a href="@{Application.term(superClass.name)}">${superClass.name}</a>
 		</div>
 		<div class="label">
 		${superClass.label}
@@ -30,7 +29,7 @@
 			${currentClass.name}
 			#{/if}
 			#{else}
-			<a href="${ctx}/${currentClass.name}">${currentClass.name}</a>
+			<a href="@{Application.term(currentClass.name)}">${currentClass.name}</a>
 			#{/else}
 			</div>
 			#{if currentClass.label}

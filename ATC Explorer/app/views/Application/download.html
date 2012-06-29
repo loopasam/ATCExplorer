@@ -1,11 +1,7 @@
 #{extends 'main.html' /}
 #{set title: 'Download' /}
-%{
-	ctx = play.configuration.getProperty('war.context', '');
-}%
-
 <div class="text introduction">
 <div class="indication">Download</div>
- <strong>- The OWL file featuring the ontology and mapping with DrugBank (2.8 MB): </strong><a href="${ctx}/public/ontologies/atc.owl">atc.owl</a><br />
+ <strong>- The OWL file featuring the ontology and mapping with DrugBank (2.8 MB): </strong><a href="@{'/public/ontologies/atc.owl'}">atc.owl</a><br />
   //TODO: more downloads options? Like mappings?
  </div>

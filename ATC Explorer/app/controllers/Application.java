@@ -8,6 +8,7 @@ import utils.OWLCLassToRender;
 import java.util.*;
 
 import org.semanticweb.owlapi.expression.ParserException;
+import org.semanticweb.owlapi.model.OWLClass;
 
 
 import models.*;

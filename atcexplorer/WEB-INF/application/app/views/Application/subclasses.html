@@ -1,0 +1,57 @@
+#{extends 'main.html' /}
+%{
+	titleModif = currentClass.name+' - '+currentClass.label;
+	if(currentClass.label == null){
+		titleModif = currentClass.name;
+	}
+}%
+#{set title: titleModif /}
+<div class="text label-query">Query: Descendant Classes of '<i>${expression}</i>' (${subClasses.size})</div>
+
+	<div class="current-container box">
+		<div class="current text">
+			<div class="${currentClass.logo} icon-category"></div>
+			<div class="name">
+			#{if currentClass.name.equals("Anonymous Class")}
+			${currentClass.name}
+			#{/if}
+			#{else}
+			<a href="@{Application.term(currentClass.name)}">${currentClass.name}</a>
+			#{/else}
+			</div>
+			#{if currentClass.label}
+			<div class="label">
+			 : ${currentClass.label}
+			</div>
+			#{/if}
+			#{if currentClass.seeAlso}
+			<div class="seeAlso">
+			<a href="${currentClass.seeAlso}" target="_BLANK">(In DrugBank)</a>
+			</div>
+			#{/if}
+		</div>
+		#{if subClasses}
+		<div class="sub-container box"><div class="indication">Descendant Classes</div>
+			#{list subClasses, as:'subClass'}
+			<div class="sub text">
+			<div class="${subClass.logo} icon-category"></div>
+				<div class="name">
+					<a href="@{Application.term(subClass.name)}">${subClass.name}</a>
+				</div>
+				<div class="label">
+				${subClass.label}
+				</div>
+			</div>
+			#{/list}
+		</div>
+		#{/if}
+	</div>
+	
+<script>
+$(function() {
+   $(".current-container").animate({
+    borderWidth: "10px",
+    textSize: "20px",
+  }, 500 );
+});
+</script>

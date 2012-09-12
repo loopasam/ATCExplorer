@@ -1,0 +1,18 @@
+#{extends 'main.html' /}
+#{set title: '404 - Page not found' /}
+
+
+        #{if play.mode.name() == 'DEV'}
+            #{404 result /}
+        #{/if}
+        #{else}
+        <div class="centered">
+            <div class="text">This page doesn't exist</div>
+            <div class="query-error text">
+                Error: ${result.message}
+            </div>
+            <div class="img404"></div>
+            
+            
+         </div>
+        #{/else}

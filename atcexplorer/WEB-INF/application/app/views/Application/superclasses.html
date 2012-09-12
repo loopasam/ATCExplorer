@@ -1,0 +1,56 @@
+#{extends 'main.html' /}
+%{
+	titleModif = currentClass.name+' - '+currentClass.label;
+	if(currentClass.label == null){
+		titleModif = currentClass.name;
+	}
+}%
+#{set title: titleModif /}
+<div class="text label-query">Query: Super Classes of '<i>${expression}</i>' (${superClasses.size})</div>
+
+<div class="super-container box"><div class="indication">Super Classes</div>
+	#{list superClasses, as:'superClass'}
+	<div class="super text">
+		<div class="${superClass.logo} icon-category"></div>
+		<div class="name">
+			<a href="@{Application.term(superClass.name)}">${superClass.name}</a>
+		</div>
+		<div class="label">
+		${superClass.label}
+		</div>
+	</div>
+	#{/list}
+	
+	<div class="current-container box">
+		<div class="current text">
+			<div class="${currentClass.logo} icon-category"></div>
+			<div class="name">
+			#{if currentClass.name.equals("Anonymous Class")}
+			${currentClass.name}
+			#{/if}
+			#{else}
+			<a href="@{Application.term(currentClass.name)}">${currentClass.name}</a>
+			#{/else}
+			</div>
+			#{if currentClass.label}
+			<div class="label">
+			 : ${currentClass.label}
+			</div>
+			#{/if}
+			#{if currentClass.seeAlso}
+			<div class="seeAlso">
+			<a href="${currentClass.seeAlso}" target="_BLANK">(In DrugBank)</a>
+			</div>
+			#{/if}
+		</div>
+	</div>
+</div>
+
+<script>
+$(function() {
+   $(".current-container").animate({
+    borderWidth: "10px",
+    textSize: "20px",
+  }, 500 );
+});
+</script>
